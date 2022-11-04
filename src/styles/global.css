@@ -46,5 +46,30 @@ display: block;
   align-items: center;
 }
 
+#divConsulta {
+    height: auto;
+    width: 66%;
+    margin-right: 50px;
+    margin-top: 10px;
+  }
 
+  #divPesquisa {
+    border-radius: 1.5rem !important;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 16px;
+    padding-left: 68px;
+    padding-right: 68px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  
+    border-radius: 35px;
+  }
+
+  #pesquisa {
+    border: none;
+    margin-right: 20px;
+    margin-left: 20px;
+    width: 500px;
+}
 
