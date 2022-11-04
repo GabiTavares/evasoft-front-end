@@ -16,8 +16,6 @@ const Catalogo = () => {
         setShowInput(getMarca);
         setMarca({value: e.target.value});
     }
-    const filterColumnModel = ForkliftList.map((md) => md.MARCA)
-    console.log(filterColumnModel)
 
     const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(8);
