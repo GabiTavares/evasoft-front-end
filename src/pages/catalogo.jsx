@@ -17,6 +17,14 @@ const Catalogo = () => {
         setMarca({value: e.target.value});
     }
 
+  const [values, setValues] = useState();
+
+  const handleChangesValues = (event) => {
+    setValues((prevValue) => ({
+      ...prevValue,
+      [event.target.name]: event.target.value}))
+  }
+
     const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(8);
 
@@ -80,20 +88,26 @@ const Catalogo = () => {
   const [showtable, setShowTable] = useState('');
 
   const handleShowTable = (e) => {
-    const getMarca = e.target.value;
-    setShowTable(getMarca);
-    setMarca({value: e.target.value});
+    if(values === undefined){
+        alert('Preencha os campos')
+        } else if (
+        values.ano !== undefined &&  
+        values.marca !== undefined &&
+        values.motor !== undefined &&
+        values.modelo !== undefined){
+    setShowTable(true);
+    }else {
+        alert('Preencha todos os campos')
+    }
   }
-
-  
 
     return(
         <div id="div_total" className='flex flex-col'>
         <h1 className='text-4xl mt-10 mb-10 text-center'>
             Consulta de Catálogo</h1>
-        <div className="flex flex-row justify-between mt-8">
+        <div className="flex flex-row justify-between">
         <div id='divForm' className=" flex flex-col items-center">
-            <form className="flex flex-col items-center ml-8">
+            <form className="flex flex-col items-center ml-11">
             <div className="flex flex-col justify-center">
             {
                   showinput === 'TOYOTA' && (
@@ -114,7 +128,10 @@ const Catalogo = () => {
           className="my-4 border-2 border-gray-300 px-20 py-3 text-md text-black"
           required='required'
           name='marca'
-          onChange={(e) => handleShowInput(e)}
+          onChange={(e) => {
+            (handleShowInput(e));
+            (handleChangesValues(e))
+            }}
           >
           <option value=''>Marca</option>
           <option value='TOYOTA'>TOYOTA</option>  
@@ -136,16 +153,19 @@ const Catalogo = () => {
           <select
           className="my-4 border-2 border-gray-300 px-20 py-3 text-md text-black"
           name='ano'
+          onChange={(e) => handleChangesValues(e)}
           >
-          <option>Ano</option>
-          {years.map(y => (
-            <option>{y}</option>
+          <option value=''>Ano</option>
+          {years.map((y, i)=> (
+            <option key={i}>{y}</option>
           ))} 
           </select>
           <select
           className="my-4 border-2 border-gray-300 px-20 py-3 text-md text-black"
           name='motor'
-          onChange={(e) => (handleShowTable(e))}
+          onChange={(e) => {
+            (handleChangesValues(e))
+            }}
           >
           <option value=''>Motor</option>
           <option value='Elétrica'>Elétrica</option>  
@@ -155,9 +175,14 @@ const Catalogo = () => {
           </div>
 
           </form>
+          <button
+          className='my-2 flex items-center px-16 py-3 text-md bg-black text-white hover:bg-gray-900 '
+          id='link-cad'
+          onClick={(e) => handleShowTable(e)}>Procurar</button>
         
           <Link to='/' 
         className='my-2 flex items-center px-16 py-3 text-md bg-black text-white hover:bg-gray-900 '
+        id='link-cad'
         >Menu Inicial</Link>
     </div>
 
@@ -183,7 +208,13 @@ const Catalogo = () => {
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {baseHyster.filter(val => {
+                    {baseHyster
+                    .filter((v) => 
+                    {if(values.marca === 'HYSTER'){
+                      return v;
+                    }} 
+                      )
+                    .filter(val => {
                         if (busca === ''){
                             return val;
                         }else if(
