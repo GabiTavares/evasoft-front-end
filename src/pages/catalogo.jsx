@@ -77,13 +77,21 @@ const Catalogo = () => {
 "VX60"            
   ]
 
+  const [showtable, setShowTable] = useState('');
+
+  const handleShowTable = (e) => {
+    const getMarca = e.target.value;
+    setShowTable(getMarca);
+    setMarca({value: e.target.value});
+  }
+
   
 
     return(
         <div id="div_total" className='flex flex-col'>
         <h1 className='text-4xl mt-10 mb-10 text-center'>
             Consulta de Catálogo</h1>
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between mt-8">
         <div id='divForm' className=" flex flex-col items-center">
             <form className="flex flex-col items-center ml-8">
             <div className="flex flex-col justify-center">
@@ -137,6 +145,7 @@ const Catalogo = () => {
           <select
           className="my-4 border-2 border-gray-300 px-20 py-3 text-md text-black"
           name='motor'
+          onChange={(e) => (handleShowTable(e))}
           >
           <option value=''>Motor</option>
           <option value='Elétrica'>Elétrica</option>  
@@ -162,7 +171,9 @@ const Catalogo = () => {
             placeholder="Digite o nome do componente, sistema ou código"
            />
             </div>
-            <TableContainer component={Paper}>
+            {showtable && (
+                <>
+                    <TableContainer component={Paper}>
                 <Table stickyHeader sx={{ minWidth: 550 }} size="small" aria-label="a dense table">
                     <TableHead>
                     <TableRow>
@@ -203,6 +214,8 @@ const Catalogo = () => {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
       />
+                </>
+            )}
             </div>
         </div>
         </div>

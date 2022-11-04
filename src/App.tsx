@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Catalogo from './pages/catalogo';
 import './styles/global.css'
 import CadastroEquip from './pages/cadastro';
+import Analise from './pages/decisão';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
             <Route path='/' element={<Menu />} />
             <Route path='/cadastro' element={<CadastroEquip />} />
             <Route path='/catalogo' element={<Catalogo />} />
+            <Route path='/analise' element={<Analise />} />
           </Routes>
         </Router>
         
