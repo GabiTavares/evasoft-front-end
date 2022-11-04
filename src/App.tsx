@@ -1,6 +1,7 @@
 import React from 'react';
 import Menu from './pages/Menu'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Catalogo from './pages/catalogo';
 
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
     <Router>
           <Routes>
             <Route path='/' element={<Menu />} />
+            <Route path='/catalogo' element={<Catalogo />} />
           </Routes>
         </Router>
         
