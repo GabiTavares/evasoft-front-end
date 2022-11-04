@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import baseHyster from '../BaseHyster.json';
+import baseHyster from '../../BaseHyster.json';
 
 const Catalogo = () => {
     const [busca, setBusca] = useState("");
