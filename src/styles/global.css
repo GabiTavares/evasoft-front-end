@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+select {
+  width: 300px !important;
+  text-align: center;
+}
+
+#link-cad {
+  width: 250px !important;
+  justify-content: center;
+}
+
+#div-falha {
+  margin-top: 10px;
+  margin-left: 35%;
+
+}
+
+#div_total {
+  width: 100%;
+}
+
+#title_catalogo {
+  margin-top: 20px !important;
+  margin-bottom: 20px;
+}
+
+#hm {
+  width: 100%;
+  text-align: center;
+}
+
+img {
+width: 60%;
+height: 100%;
+display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+
+#div-img {
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+
+
+
