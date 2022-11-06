@@ -52,6 +52,9 @@ const Catalogo = () => {
     2017,
     2018,
     2019,
+    2020,
+    2021,
+    2022
   ]
   const models = [
 '8FG25 ',          
@@ -99,6 +102,9 @@ const Catalogo = () => {
     }else {
         alert('Preencha todos os campos')
     }
+    // const getValues = e.target.value;
+    // setShowTable(getValues)
+    // setMarca({value: e.target.value});
   }
 
     return(
@@ -144,6 +150,9 @@ const Catalogo = () => {
           className="my-4 border-2 border-gray-300 px-20 py-3 text-md text-black"
           required='required'
           name='modelo'
+          onChange={(e) => {
+            (handleChangesValues(e))
+          }}
           >
           <option value=''>Modelo</option>
           {models.map((md, i) => (
@@ -153,7 +162,8 @@ const Catalogo = () => {
           <select
           className="my-4 border-2 border-gray-300 px-20 py-3 text-md text-black"
           name='ano'
-          onChange={(e) => handleChangesValues(e)}
+          onChange={(e) => {
+            handleChangesValues(e)}}
           >
           <option value=''>Ano</option>
           {years.map((y, i)=> (
@@ -178,7 +188,8 @@ const Catalogo = () => {
           <button
           className='my-2 flex items-center px-16 py-3 text-md bg-black text-white hover:bg-gray-900 '
           id='link-cad'
-          onClick={(e) => handleShowTable(e)}>Procurar</button>
+          onClick={(e) => handleShowTable(e)}
+          >Procurar</button>
         
           <Link to='/' 
         className='my-2 flex items-center px-16 py-3 text-md bg-black text-white hover:bg-gray-900 '
@@ -208,16 +219,38 @@ const Catalogo = () => {
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {baseHyster
-                    .filter((v) => 
-                    {if(values.marca === 'HYSTER'){
-                      return v;
-                    }} 
+                      {ForkliftList.filter( id => {
+                        if(values.marca === null && values.modelo === null){
+                          return false;
+                        }
+                          else if(
+                            id.MARCA.toUpperCase().includes(values.marca) &&
+                            id.MODELO.toUpperCase().includes(values.modelo) &&
+                            id.ANO.toString().toUpperCase().includes(values.ano) &&
+                            id.MOTOR.includes(values.motor)
+                          ){
+                              return id;
+                          }
+                      })
+                      .filter( filt => {
+                        if(filt.ID !== false){
+                          return true;
+                        }
+                      }
                       )
-                    .filter(val => {
-                        if (busca === ''){
+                      .map
+                      (fk => {
+                        return <>
+                          {baseHyster
+                            .filter(v => 
+                            {if(fk.MARCA === v.Marca.toUpperCase()){
+                                return v;
+                            }} 
+                            )
+                            .filter(val => {
+                                if (busca === ''){
                             return val;
-                        }else if(
+                                }else if(
                             val.Codigo.toString().toLowerCase().includes(busca.toLowerCase()) ||
                             val.Componente.toLowerCase().includes(busca.toLowerCase()) ||
                             val.Sistema.toLowerCase().includes(busca.toLowerCase())
@@ -233,6 +266,9 @@ const Catalogo = () => {
                             <TableCell align='center'>{m.Sistema}</TableCell>
                         </TableRow>
                     ))}    
+                        </>
+                      })
+                    }
                     </TableBody>
                 </Table>
             </TableContainer>
