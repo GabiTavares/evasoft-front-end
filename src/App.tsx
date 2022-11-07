@@ -5,6 +5,7 @@ import Catalogo from './pages/catalogo';
 import './styles/global.css'
 import CadastroEquip from './pages/cadastro';
 import Analise from './pages/decisão';
+import CadFinal from './pages/cadfinal';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Routes>
             <Route path='/' element={<Menu />} />
             <Route path='/cadastro' element={<CadastroEquip />} />
+            <Route path='/cadastro_finalizado' element={<CadFinal />} />
             <Route path='/catalogo' element={<Catalogo />} />
             <Route path='/analise' element={<Analise />} />
           </Routes>

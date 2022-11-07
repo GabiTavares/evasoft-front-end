@@ -38,56 +38,17 @@ const Catalogo = () => {
     setPage(0);
   };
 
-  const years = [
-    2007,
-    2008,
-    2009,
-    2010,
-    2011,
-    2012,
-    2013,
-    2014,
-    2015,
-    2016,
-    2017,
-    2018,
-    2019,
-    2020,
-    2021,
-    2022
-  ]
-  const models = [
-'8FG25 ',          
-'FG18  ',          
-'8FG18 ',          
-'8FGU25',          
-'8FGU18',          
-'FGZN25',          
-'8FG25B',          
-'8FGJ35',          
-'8FGU30',   
-'8FG18C',   
-'SWEB140',   
-'H060 FT',   
-'H50CT',   
-'H50FT',   
-'R1.6H',   
-'S1.6',   
-'FMX 16',   
-'FMX 17',   
-'FMX G115 8825',   
-'FMX G115 8825 TR',
-'FMX17',
-'EGV 16',
-'FMXG115 8825',    
-'18AK ',          
-'GP050LX',        
-'MR20D',           
-'MS16' ,          
-'VX50',            
-"VX60"            
-  ]
+  //Infos da ForkliftList
+  const anosFk = ForkliftList.map(ano => ano.ANO)
+  const anosFkNorepeat = [...new Set(anosFk)]
 
+  const modelsFk = ForkliftList.map(md => md.MODELO)
+  const modelsFkNorepeat = [...new Set(modelsFk)];
+
+  const motorFk = ForkliftList.map(mt => mt.MOTOR)
+  const motorFkNorepeat = [...new Set(motorFk)];
+
+//ShowTable
   const [showtable, setShowTable] = useState('');
 
   const handleShowTable = (e) => {
@@ -155,9 +116,27 @@ const Catalogo = () => {
           }}
           >
           <option value=''>Modelo</option>
-          {models.map((md, i) => (
-            <option key={i}>{md}</option>
-          ))} 
+          {ForkliftList.filter(m => {
+            if(values === undefined) {
+              return null;
+            }
+            else if(m.MARCA.toUpperCase().includes(values.marca)){
+              return m
+            }
+          }).map(m => {
+            return <>
+              {modelsFkNorepeat
+              .filter(mf => {
+                if(mf === m.MODELO){
+                  return mf;
+                }
+              })
+              .map((md, i) => (
+                <option key={i}>{md}</option>
+              ))
+              }
+            </>
+          })}
           </select>
           <select
           className="my-4 border-2 border-gray-300 px-20 py-3 text-md text-black"
@@ -166,9 +145,28 @@ const Catalogo = () => {
             handleChangesValues(e)}}
           >
           <option value=''>Ano</option>
-          {years.map((y, i)=> (
-            <option key={i}>{y}</option>
-          ))} 
+          {ForkliftList.filter(m => {
+            if(values === undefined) {
+              return null;
+            }
+            else if(m.MARCA.toUpperCase().includes(values.marca) &&
+                    m.MODELO.toUpperCase().includes(values.modelo)){
+              return m
+            }
+          }).map(m => {
+            return <>
+              {anosFkNorepeat
+              .filter(yf => {
+                if(yf === m.ANO){
+                  return yf;
+                }
+              })
+              .map((y, i) => (
+                <option key={i}>{y}</option>
+              ))
+              }
+            </>
+          })}
           </select>
           <select
           className="my-4 border-2 border-gray-300 px-20 py-3 text-md text-black"
@@ -178,8 +176,29 @@ const Catalogo = () => {
             }}
           >
           <option value=''>Motor</option>
-          <option value='Elétrica'>Elétrica</option>  
-          <option value='GLP'>GLP</option>  
+          {ForkliftList.filter((m) => {
+            if(values === undefined) {
+              return null;
+            }
+            else if(m.MARCA.toUpperCase().includes(values.marca) &&
+                    m.MODELO.toUpperCase().includes(values.modelo) &&
+                    m.ANO.toString().includes(values.ano)){
+              return m
+            }
+          }).map(m => {
+            return <>
+              {motorFkNorepeat
+              .filter(mtf => {
+                if(mtf === m.MOTOR){
+                  return mtf;
+                }
+              })
+              .map((mt, i) => (
+                <option key={i}>{mt}</option>
+              ))
+              }
+            </>
+          })} 
           </select>
 
           </div>

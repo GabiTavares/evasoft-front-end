@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
+import ForkliftList from '../bases/ForkliftList.json'
 
 
 export default function CadastroEquip() {
 
+  
+
   //juntar todas as functions para enviar para back 
   const navigate = useNavigate();
-
   const handleSubmit = (event) => {
     event.preventDefault();
     navigate('/cadastro_finalizado')
