@@ -4,7 +4,8 @@ import { TableContainer, Paper, Table,
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import baseHyster from '../bases/BaseHyster.json';
-import ForkliftList from '../bases/ForkliftList.json'
+import ForkliftList from '../bases/ForkliftList.json';
+import swal from 'sweetalert2'
 
 const Catalogo = () => {
     const [busca, setBusca] = useState("");
@@ -39,6 +40,9 @@ const Catalogo = () => {
   };
 
   //Infos da ForkliftList
+  const marcasBh = baseHyster.map(mc => mc.Marca.toUpperCase())
+  const marcasBhNorepeat = [...new Set(marcasBh)]
+
   const anosFk = ForkliftList.map(ano => ano.ANO)
   const anosFkNorepeat = [...new Set(anosFk)]
 
@@ -51,7 +55,7 @@ const Catalogo = () => {
 //ShowTable
   const [showtable, setShowTable] = useState('');
 
-  const handleShowTable = (e) => {
+  const handleShowTable = () => {
     if(values === undefined){
         alert('Preencha os campos')
         } else if (
@@ -63,10 +67,8 @@ const Catalogo = () => {
     }else {
         alert('Preencha todos os campos')
     }
-    // const getValues = e.target.value;
-    // setShowTable(getValues)
-    // setMarca({value: e.target.value});
   }
+
 
     return(
         <div id="div_total" className='flex flex-col'>
@@ -252,8 +254,14 @@ const Catalogo = () => {
                           }
                       })
                       .filter( filt => {
-                        if(filt.ID !== false){
+                        if(filt.MARCA.includes(marcasBhNorepeat)){
                           return true;
+                        }else {
+                          swal.fire({
+                            icon: 'error',
+                            title: 'Alerta',
+                            text: 'Não possuimos catálogo pra esse equipamento'
+                          })
                         }
                       }
                       )
@@ -263,7 +271,9 @@ const Catalogo = () => {
                           {baseHyster
                             .filter(v => 
                             {if(fk.MARCA === v.Marca.toUpperCase()){
-                                return v;
+                              return v;
+                            }else {
+                              console.log(v.Marca)
                             }} 
                             )
                             .filter(val => {
